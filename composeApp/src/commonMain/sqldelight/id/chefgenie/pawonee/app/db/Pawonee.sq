@@ -1,0 +1,47 @@
+-- Cache luring-dahulu Pawonee (FSD 10-alur butir 1, 3, 4). Waktu dalam epoch milidetik.
+
+-- Resep: satu baris per resep, JSON apa adanya dari GET /resep; berlaku 7 hari.
+CREATE TABLE cache_resep (
+    id TEXT NOT NULL PRIMARY KEY,
+    json TEXT NOT NULL,
+    diambil_ms INTEGER NOT NULL
+);
+
+-- Stok: dibaca dari Pedaree lewat GET /stok; berlaku 24 jam.
+CREATE TABLE cache_stok (
+    nama_bahan TEXT NOT NULL PRIMARY KEY,
+    gram INTEGER NOT NULL,
+    kedaluwarsa_hari INTEGER NOT NULL,
+    kode_grade TEXT NOT NULL,
+    diambil_ms INTEGER NOT NULL
+);
+
+-- Penanda sinkron (kunci: stok_sinkron_ms, resep_sinkron_ms).
+CREATE TABLE meta (
+    kunci TEXT NOT NULL PRIMARY KEY,
+    nilai TEXT NOT NULL
+);
+
+hapusResep:
+DELETE FROM cache_resep;
+
+simpanResep:
+INSERT OR REPLACE INTO cache_resep(id, json, diambil_ms) VALUES (?, ?, ?);
+
+semuaResep:
+SELECT id, json, diambil_ms FROM cache_resep ORDER BY id;
+
+hapusStok:
+DELETE FROM cache_stok;
+
+simpanStok:
+INSERT OR REPLACE INTO cache_stok(nama_bahan, gram, kedaluwarsa_hari, kode_grade, diambil_ms) VALUES (?, ?, ?, ?, ?);
+
+semuaStok:
+SELECT nama_bahan, gram, kedaluwarsa_hari, kode_grade, diambil_ms FROM cache_stok ORDER BY nama_bahan;
+
+simpanMeta:
+INSERT OR REPLACE INTO meta(kunci, nilai) VALUES (?, ?);
+
+bacaMeta:
+SELECT nilai FROM meta WHERE kunci = ?;
