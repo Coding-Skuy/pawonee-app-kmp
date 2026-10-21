@@ -10,9 +10,13 @@ ktor = "3.0.3"
 coroutines = "1.10.1"
 koin = "4.0.0"
 serialization = "1.8.1"
-datetime = "0.6.2"
+datetime = "0.7.1"
 kover = "0.9.1"
 androidx-activity = "1.9.3"
+sqldelight = "2.1.0"
+datastore = "1.1.7"
+okio = "3.9.1"
+workmanager = "2.10.0"
 
 [libraries]
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -29,7 +33,19 @@ navigation3-ui = { module = "org.jetbrains.androidx.navigation3:navigation3-ui",
 
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 
+ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
+sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqldelight" }
+sqldelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
+sqldelight-driver-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
+sqldelight-driver-native = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
+sqldelight-driver-jvm = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
+datastore-core-okio = { module = "androidx.datastore:datastore-core-okio", version.ref = "datastore" }
+okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
+androidx-core-ktx = { module = "androidx.core:core-ktx", version = "1.15.0" }
+workmanager-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workmanager" }
+
 [plugins]
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

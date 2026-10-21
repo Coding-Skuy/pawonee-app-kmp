@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.android.application)
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
@@ -29,13 +30,33 @@ kotlin {
             implementation(libs.navigation3.ui)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.kotlinx.datetime)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.json)
+            implementation(libs.sqldelight.runtime)
+            implementation(libs.sqldelight.coroutines)
+            implementation(libs.datastore.core.okio)
+            implementation(libs.okio)
         }
         androidMain.dependencies {
             implementation(libs.androidx.activity.compose)
+            implementation(libs.ktor.client.okhttp)
+            implementation(libs.sqldelight.driver.android)
+            implementation(libs.workmanager.ktx)
+            implementation(libs.androidx.core.ktx)
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+            implementation(libs.sqldelight.driver.native)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
             implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.ktor.client.mock)
+        }
+        jvmTest.dependencies {
+            implementation(libs.sqldelight.driver.jvm)
         }
     }
 }
@@ -53,5 +74,13 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+sqldelight {
+    databases {
+        create("PawoneeDb") {
+            packageName.set("id.chefgenie.pawonee.app.db")
+        }
     }
 }
