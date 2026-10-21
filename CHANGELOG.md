@@ -4,6 +4,9 @@ Format: [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/). Versi mengi
 
 ## [Belum dirilis]
 
+### Ditambahkan
+- Governance branch: `CONTRIBUTING.md`, template PR, `CODEOWNERS`, ADR-0002 (PWN-KMP-GOV-BRANCH).
+
 ## [1.0.0] — 2026-10-14
 
 ### Ditambahkan
