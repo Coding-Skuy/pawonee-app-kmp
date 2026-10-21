@@ -1,21 +1,34 @@
-# Satu-satunya sumber versi dependensi Pawonee KMP.
+# Satu-satunya sumber versi dependensi Pawonee KMP (pin persis; selaras AGENTS.md).
 [versions]
-kotlin = "2.0.21"
-compose-multiplatform = "1.7.0"
+kotlin = "2.2.20"
+compose-multiplatform = "1.8.2"
+navigation3 = "1.0.0"
+agp = "8.7.2"
 ktor = "3.0.3"
-coroutines = "1.9.0"
+coroutines = "1.10.1"
 koin = "4.0.0"
-androidx-activity = "1.9.2"
-androidx-lifecycle = "2.8.6"
+serialization = "1.8.1"
+datetime = "0.6.2"
+kover = "0.9.1"
 
 [libraries]
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+navigation3-runtime = { module = "org.jetbrains.androidx.navigation3:navigation3-runtime", version.ref = "navigation3" }
+navigation3-ui = { module = "org.jetbrains.androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }

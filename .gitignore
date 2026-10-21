@@ -4,3 +4,6 @@ build/
 local.properties
 *.iml
 .DS_Store
+graphify-out/
+.hypothesis/
+.schemathesis/
