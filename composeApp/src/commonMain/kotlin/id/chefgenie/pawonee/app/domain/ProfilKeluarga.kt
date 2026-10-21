@@ -6,8 +6,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.serialization.Serializable
 
 /** Profil keluarga aktif (BRD 20). `jiwa` 1-8; di luar rentang ditolak mesin dengan `JIWA_DI_LUAR_RENTANG`. */
+@Serializable
 data class ProfilKeluarga(
     val jiwa: Int = 4,
     val alergi: List<String> = emptyList(),
