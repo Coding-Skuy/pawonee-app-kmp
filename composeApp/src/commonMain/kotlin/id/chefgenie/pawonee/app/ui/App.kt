@@ -7,6 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
+import id.chefgenie.pawonee.app.AppContainer
 import id.chefgenie.pawonee.app.data.BankBawaan
 import id.chefgenie.pawonee.app.domain.ProfilStore
 import id.chefgenie.pawonee.app.domain.RekomendasiHolder
@@ -21,10 +22,26 @@ import id.chefgenie.pawonee.pantryresep.RekomendasiEngine
  * (mis. `pawonee://resep/telur-balado?jiwa=4` dari intent Android).
  */
 @Composable
-fun App(
+fun App(container: AppContainer, deepLinkAwal: String? = null) {
+    val profilStore = container.profilStore
+    val sumberStok: SumberStok = container.stokRepo
+    AppIsi(container, profilStore, sumberStok, deepLinkAwal)
+}
+
+/** Variasi tanpa wiring penyimpanan (pratinjau/uji): profil dan stok dari memori, tanpa banner. */
+@Composable
+fun AppMemori(
     deepLinkAwal: String? = null,
     profilStore: ProfilStore = remember { ProfilStore() },
     sumberStok: SumberStok = remember { StokMemori() },
+) = AppIsi(null, profilStore, sumberStok, deepLinkAwal)
+
+@Composable
+private fun AppIsi(
+    container: AppContainer?,
+    profilStore: ProfilStore,
+    sumberStok: SumberStok,
+    deepLinkAwal: String?,
 ) {
     val scope = rememberCoroutineScope()
     val bank = BankBawaan.bank
@@ -32,6 +49,14 @@ fun App(
         RekomendasiHolder(RekomendasiEngine(bank, BankBawaan.harga), profilStore, sumberStok, scope)
     }
     val navigasi = remember { NavigasiState() }
+
+    LaunchedEffect(container) {
+        if (container != null) {
+            container.profilRepo.mulai(scope)
+            container.stokRepo.segarkan()
+            container.sinkron.perbaruiStatus()
+        }
+    }
 
     LaunchedEffect(deepLinkAwal) {
         if (deepLinkAwal != null) navigasi.bukaDeepLink(deepLinkAwal, profilStore.profil.value.jiwa)
@@ -43,7 +68,7 @@ fun App(
             onBack = { navigasi.kembali() },
             entryProvider = entryProvider<Rute> {
                 entry<Rute.Beranda> {
-                    LayarBeranda(profilStore, holder) { tujuan ->
+                    LayarBeranda(profilStore, holder, container?.sinkron?.bannerLuring) { tujuan ->
                         navigasi.buka(
                             when (tujuan) {
                                 Tujuan.Rekomendasi -> Rute.Rekomendasi

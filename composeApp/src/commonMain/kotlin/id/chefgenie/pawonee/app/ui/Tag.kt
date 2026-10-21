@@ -13,6 +13,7 @@ object Tag {
     const val NAV_REKOMENDASI = "nav_rekomendasi"
     const val NAV_PREFERENSI = "nav_preferensi"
     const val NAV_RIWAYAT = "nav_riwayat"
+    const val BANNER_LURING = "banner_luring"
     const val KEMBALI = "tombol_kembali"
 
     const val JIWA_NILAI = "jiwa_nilai"

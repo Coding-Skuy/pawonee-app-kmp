@@ -17,6 +17,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
@@ -41,10 +44,23 @@ private fun Kerangka(tag: String, judul: String, kembali: (() -> Unit)?, isi: @C
 }
 
 @Composable
-fun LayarBeranda(profilStore: ProfilStore, holder: RekomendasiHolder, nav: (Tujuan) -> Unit) {
+fun LayarBeranda(
+    profilStore: ProfilStore,
+    holder: RekomendasiHolder,
+    bannerLuring: StateFlow<Boolean>?,
+    nav: (Tujuan) -> Unit,
+) {
     val profil by profilStore.profil.collectAsState()
     val hasil by holder.hasil.collectAsState()
+    val luring by (bannerLuring ?: remember { MutableStateFlow(false) }).collectAsState()
     Kerangka(Tag.LAYAR_BERANDA, "Pawonee", null) {
+        if (luring) {
+            Text(
+                "Mode luring: stok terakhir disinkron lebih dari 24 jam lalu.",
+                Modifier.fillMaxWidth().testTag(Tag.BANNER_LURING),
+                color = MaterialTheme.colorScheme.error,
+            )
+        }
         Text("Keluarga ${profil.jiwa} jiwa; ${hasil.rekomendasi.size} rekomendasi hari ini")
         Button(onClick = { nav(Tujuan.Rekomendasi) }, Modifier.fillMaxWidth().testTag(Tag.NAV_REKOMENDASI)) {
             Text("Rekomendasi masak")

@@ -22,10 +22,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         deepLink = intent?.dataString
+        val container = (application as PawoneeApplication).container
         setContent {
             // testTag dipaparkan sebagai resource-id agar terbaca Maestro (siklus 2).
             Box(Modifier.fillMaxSize().semantics { testTagsAsResourceId = true }) {
-                App(deepLinkAwal = deepLink)
+                App(container = container, deepLinkAwal = deepLink)
             }
         }
     }
