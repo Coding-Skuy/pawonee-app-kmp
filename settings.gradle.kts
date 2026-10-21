@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "pawonee-app-kmp"
 include(":shared:pantry-resep")
+include(":composeApp")
